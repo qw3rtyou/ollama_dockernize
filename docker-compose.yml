@@ -2,15 +2,18 @@ services:
   openWebUI:
     image: ghcr.io/open-webui/open-webui:main
     restart: always
-    ports:
-      - "3000:8080"
+    # Ports config isn't required beacuse of "network_mode: host"
+    # Access OpenWebUI on 8080
+    # ports: 
+    #   - "3000:8080"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - open-webui-local:/app/backend/data
+    network_mode: host 
  
   ollama:
-    build: ./ollama  # ✅ Dockerfile 빌드
+    build: ./ollama
     container_name: ollama
     ports:
       - "11434:11434"
